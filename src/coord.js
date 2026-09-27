@@ -1,15 +1,15 @@
 import {
   makeCoordPuzzle, statesOf, RANKS, WIDTHS, MAX_STATES, MORE_RANKS, MORE_WIDTHS, MORE_MAX_STATES,
-} from './puzzle.js?v=7348bbc2';
-import { randomSeedString } from './rng.js?v=7348bbc2';
-import { CoordBoard } from './coordboard.js?v=7348bbc2';
-import { confirmDialog, isDialogOpen } from './ui.js?v=7348bbc2';
-import { installStarfield } from './starfield.js?v=7348bbc2';
-import { installShare } from './share.js?v=7348bbc2';
-import { installOffline } from './offline.js?v=7348bbc2';
-import { saveGame, loadGame, clearGame } from './save.js?v=7348bbc2';
-import { addClear, loadRecords, summarize, clearRecords, sizeLabel } from './records.js?v=7348bbc2';
-import { sound, armSound } from './sound.js?v=7348bbc2';
+} from './puzzle.js?v=fe00680b';
+import { randomSeedString } from './rng.js?v=fe00680b';
+import { CoordBoard } from './coordboard.js?v=fe00680b';
+import { confirmDialog, isDialogOpen } from './ui.js?v=fe00680b';
+import { installStarfield } from './starfield.js?v=fe00680b';
+import { installShare } from './share.js?v=fe00680b';
+import { installOffline } from './offline.js?v=fe00680b';
+import { saveGame, loadGame, clearGame } from './save.js?v=fe00680b';
+import { addClear, loadRecords, summarize, clearRecords, sizeLabel } from './records.js?v=fe00680b';
+import { sound, armSound } from './sound.js?v=fe00680b';
 
 // 「もっと大きく」を押すと、MORE_RANKS / MORE_WIDTHS のボタンも出る
 const ALL_RANKS = [...RANKS, ...MORE_RANKS];
@@ -512,10 +512,36 @@ function foldSections() {
   narrow.addEventListener('change', apply);
 }
 
+/**
+ * ホーム画面。開くとまずここが出て、遊んでいた続きがあれば「つづきから」、
+ * なければ「はじめる」。記録があれば簡単にまとめて出す。
+ */
+function installHome() {
+  const saved = loadGame();
+  const clears = loadRecords();
+  $('btn-start').textContent = saved ? 'つづきから' : 'はじめる';
+  const summary = $('home-summary');
+  if (clears.length) {
+    const sizes = summarize(clears);
+    const biggest = sizes[sizes.length - 1];
+    summary.textContent = `これまで ${clears.length} 回クリア・最大は ${sizeLabel(biggest.rank, biggest.width)}`;
+  } else {
+    summary.textContent = saved ? '前回の続きから遊べます。' : 'はじめてなら 4 次元 4 マスから。';
+  }
+  const show = (home) => {
+    $('home').hidden = !home;
+    $('game').hidden = home;
+    window.scrollTo(0, 0);
+  };
+  $('btn-start').addEventListener('click', () => show(false));
+  $('btn-home').addEventListener('click', () => show(true));
+}
+
 installStarfield();
 armSound();
 installShare();
 installOffline();
 installMenu();
 foldSections();
+installHome();
 window.coordMaze = new CoordMaze();

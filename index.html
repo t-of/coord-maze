@@ -28,13 +28,41 @@ history.replaceState(null,'',location.pathname+location.search+(m[2]?'#'+m[2]:''
 <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png?v=2d28f3a6" />
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png?v=2d28f3a6" />
 <link rel="manifest" href="./manifest.webmanifest?v=2d28f3a6" />
-<link rel="stylesheet" href="./webapp-kit/webapp-kit.css?v=7348bbc2" />
-<link rel="stylesheet" href="css/space.css?v=7348bbc2" />
-<link rel="stylesheet" href="css/coord.css?v=7348bbc2" />
-<script src="./webapp-kit/webapp-kit.js?v=7348bbc2"></script>
+<link rel="stylesheet" href="./webapp-kit/webapp-kit.css?v=fe00680b" />
+<link rel="stylesheet" href="css/space.css?v=fe00680b" />
+<link rel="stylesheet" href="css/coord.css?v=fe00680b" />
+<script src="./webapp-kit/webapp-kit.js?v=fe00680b"></script>
 </head>
 <body>
 
+<!-- ホーム。ここから「はじめる」でゲームへ、右下のリンクでチュートリアルへ行ける -->
+<main id="home">
+  <div class="home-card">
+    <h1><svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <radialGradient id="lg-sun2"><stop offset="0" stop-color="#fffbea"/><stop offset=".35" stop-color="#ffd98a"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="54" cy="32" r="16" fill="url(#lg-sun2)"/>
+      <g stroke-width="1.6" stroke-dasharray="2.5 3" opacity=".55">
+        <line x1="6" y1="16" x2="50" y2="16" stroke="#6ff0ff"/>
+        <line x1="6" y1="32" x2="50" y2="32" stroke="#b06bff"/>
+        <line x1="6" y1="48" x2="50" y2="48" stroke="#ff5fa2"/>
+      </g>
+      <circle cx="22" cy="16" r="5.5" fill="#6ff0ff"/>
+      <circle cx="36" cy="32" r="5.5" fill="#b06bff"/>
+      <ellipse cx="36" cy="32" rx="9.5" ry="2.6" fill="none" stroke="#e6d4ff" stroke-width="1.3" transform="rotate(-17 36 32)"/>
+      <circle cx="12" cy="48" r="5.5" fill="#ff5fa2"/>
+    </svg>COORD <span>MAZE</span></h1>
+    <p class="tagline">N 次元迷路を、座標だけで表したパズル</p>
+
+    <button id="btn-start" class="primary wide">はじめる</button>
+    <p id="home-summary"></p>
+
+    <a class="btnlink wide" href="tutorial.html">はじめての方へ（チュートリアル）</a>
+  </div>
+</main>
+
+<div id="game" hidden>
 <header>
   <h1><svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
     <!-- 盤面と同じ見立て: 3 本の軌道 (= 3 次元)、その上の惑星、右端の恒星 -->
@@ -54,6 +82,7 @@ history.replaceState(null,'',location.pathname+location.search+(m[2]?'#'+m[2]:''
   </svg>COORD <span>MAZE</span></h1>
   <p class="tagline">N 次元迷路を、座標だけで表したパズル</p>
   <div class="backs">
+    <button class="back" id="btn-home">ホームへ</button>
     <!-- アプリにする (webapp-kit)。インストール済み・インストールできない環境では隠れる -->
     <button class="back share" data-wak="install" hidden><svg class="share-ico install-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/></svg>アプリにする</button>
     <button class="back share" data-share><svg class="share-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3"/></svg>シェア</button>
@@ -163,6 +192,7 @@ history.replaceState(null,'',location.pathname+location.search+(m[2]?'#'+m[2]:''
     <p class="credit"><a href="/">T.OF...</a> のアプリ・<a href="https://t-of.github.io/contact/">問い合わせ</a></p>
   </aside>
 </main>
+</div>
 
 <div id="scrim" class="scrim"></div>
 
@@ -183,6 +213,6 @@ history.replaceState(null,'',location.pathname+location.search+(m[2]?'#'+m[2]:''
   </div>
 </div>
 
-<script type="module" src="./src/coord.js?v=7348bbc2"></script>
+<script type="module" src="./src/coord.js?v=fe00680b"></script>
 </body>
 </html>

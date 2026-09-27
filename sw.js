@@ -13,7 +13,7 @@
 const PREFIX = 'coord-maze-';
 
 // --- ここから下の 2 つは node tools/stamp.mjs が書く (手で直さない) ---
-const VERSION = '52e6c1ca';
+const VERSION = '96de65c2';
 const SHELL = [
   './',
   './index.html',
