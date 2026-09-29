@@ -9,6 +9,7 @@
 // 注意: キャッシュ (CacheStorage) は t-of.github.io のすべてのアプリで共有されている。
 // 古いキャッシュを消すときは、必ず自分の PREFIX で始まるものだけを消す。
 // keys.filter(k => k !== CACHE) のように書くと、ほかのアプリのキャッシュまで消してしまう。
+// ブラウザの HTTP キャッシュを通さない（install は reload、fetch は no-cache）。古い main.js と新しい index.html が混ざって動かなくなるのを防ぐ。
 
 const PREFIX = 'coord-maze-';
 
@@ -51,7 +52,7 @@ const CACHE = `${PREFIX}${VERSION}`;
 const FONT_CACHE = `${PREFIX}fonts`;
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL.map((u) => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (e) => {
@@ -78,7 +79,7 @@ self.addEventListener('fetch', (e) => {
 async function networkFirst(req) {
   const cache = await caches.open(CACHE);
   try {
-    const res = await fetch(req);
+    const res = await fetch(req, { cache: 'no-cache' });
     if (res.ok) cache.put(req, res.clone());
     return res;
   } catch {
